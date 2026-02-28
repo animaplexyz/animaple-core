@@ -56,14 +56,6 @@ Here are some of the main endpoints provided by AnimapleCore:
 | `/api/schedule` | `GET` | Get the weekly release schedule |
 | `/api/genre` | `GET` | Get all available anime genres |
 
-## ☁️ Deployment
-
-This project is highly optimized for [Vercel](https://vercel.com/). 
-1. Push your code to your GitHub repository.
-2. Import the project in your Vercel Dashboard.
-3. **Important:** Add the `BASEURL` key in the **Environment Variables** settings on Vercel before deploying.
-4. Click **Deploy**.
-
 ## 📝 License
 
 This project is licensed under the [MIT License](./LICENSE).
