@@ -62,6 +62,6 @@ This project is licensed under the [MIT License](./LICENSE).
 
 ---
 <p align="center">
-  <b>Project Animaple</b><br>
+  <b>Animaple Project</b><br>
   Developed by <a href="https://github.com/ofikur">Ofikur R.</a>
 </p>
