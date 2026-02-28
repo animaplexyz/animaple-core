@@ -5,7 +5,7 @@
 ![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
-**AnimapleCore API** is the official backend engine powering the **Project Animaple**. Built with Next.js, this RESTful API seamlessly scrapes and serves real-time anime data from the Otakudesu website, delivering fast, reliable, and structured JSON responses for frontend integrations.
+**AnimapleCore API** is the official backend engine powering the **Animaple Project**. Built with Next.js, this RESTful API seamlessly scrapes and serves real-time anime data from the Otakudesu website, delivering fast, reliable, and structured JSON responses for frontend integrations.
 
 > **Disclaimer:** This project is developed strictly for personal, educational purposes, and as the backend infrastructure for Project Animaple. Use it at your own risk.
 
