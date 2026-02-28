@@ -479,21 +479,6 @@ export default function DocumentationPage() {
           ))}
         </div>
       </main>
-
-      {/* Global Styles */}
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #94a3b8; }
-
-        .custom-scrollbar-dark::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar-dark::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar-dark::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .custom-scrollbar-dark:hover::-webkit-scrollbar-thumb { background: #475569; }
-
-        html { scroll-behavior: smooth; }
-      `}</style>
     </div>
   );
 }
