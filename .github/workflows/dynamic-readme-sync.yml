@@ -8,6 +8,10 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write 
+
     steps:
       - name: Mengunduh Repositori
         uses: actions/checkout@v4
