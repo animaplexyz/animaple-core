@@ -2,11 +2,21 @@ import axios from 'axios';
 import { load } from 'cheerio';
 import scrapeOngoingAnime from '@/lib/scapeOngoingAnime';
 import scrapeCompleteAnime from '@/lib/scrapeCompleteAnime';
-import { ongoingAnime as ongoingAnimeType, completeAnime as completeAnimeType } from '@/types/types';
+import type { ongoingAnime as ongoingAnimeType, completeAnime as completeAnimeType } from '@/types/types';
 
-const home = async (): Promise<any> => {
-  const BASEURL = process.env.BASEURL;
-  const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY;
+interface HomeData {
+  ongoing_anime: ongoingAnimeType[];
+  complete_anime: completeAnimeType[];
+}
+
+interface ErrorData {
+  error: string;
+  message: string;
+}
+
+const home = async (): Promise<HomeData | ErrorData> => {
+  const BASEURL = process.env.BASEURL || '';
+  const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY || '';
 
   const targetUrl = `https://api.scraperapi.com/?api_key=${SCRAPER_API_KEY}&url=${BASEURL}`;
 
@@ -27,7 +37,7 @@ const home = async (): Promise<any> => {
   } catch (error: any) {
     return {
       error: "Gagal mengambil data",
-      message: error.message
+      message: error?.message || "Unknown Error"
     };
   }
 };
