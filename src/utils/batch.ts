@@ -2,18 +2,23 @@ import { fetchHtml } from './fetchHtml';
 import getBatch from '@/lib/getBatch';
 import scrapeBatch from '@/lib/scrapeBatch';
 
-const batch = async ({ batchSlug, animeSlug }: { batchSlug?: string, animeSlug?: string }) => {
-  let batch: string | undefined = batchSlug;
+const batch = async (params: string | { batchSlug?: string, animeSlug?: string }) => {
+  let batchSlug: string | undefined;
 
-  if (animeSlug) {
-    const data = await fetchHtml(`/anime/${animeSlug}`);
-    const batchData = getBatch(data);
-    batch = batchData?.slug;
+  if (typeof params === 'string') {
+    batchSlug = params;
+  } else {
+    batchSlug = params.batchSlug;
+    if (params.animeSlug) {
+      const data = await fetchHtml(`/anime/${params.animeSlug}/`);
+      const batchData = getBatch(data);
+      batchSlug = batchData?.slug;
+    }
   }
   
-  if (!batch) return false;
+  if (!batchSlug) return false;
 
-  const data = await fetchHtml(`/batch/${batch}`);
+  const data = await fetchHtml(`/batch/${batchSlug}/`);
   const result = scrapeBatch(data);
 
   return result;
