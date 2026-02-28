@@ -8,6 +8,28 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "AnimapleCore Powered by Otakudesu",
   description: "Core API for Project Animaple, scraping Otakudesu data.",
+  openGraph: {
+    title: "AnimapleCore Powered by Otakudesu",
+    description: "Core API for Project Animaple, scraping Otakudesu data.",
+    url: "https://animaple-core.vercel.app",
+    siteName: "AnimapleCore",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "AnimapleCore Logo",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "AnimapleCore Powered by Otakudesu",
+    description: "Core API for Project Animaple, scraping Otakudesu data.",
+    images: ["/icon.png"],
+  },
 }
 
 export const viewport = {
