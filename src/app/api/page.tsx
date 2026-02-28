@@ -25,19 +25,10 @@ export default function HomePage() {
             <span className="text-gray-500">&#123;</span>{"\n"}
             {"  "}<span className="text-sky-400">&quot;name&quot;</span>: <span className="text-amber-300">&quot;AnimapleCore API&quot;</span>,{"\n"}
             {"  "}<span className="text-sky-400">&quot;version&quot;</span>: <span className="text-amber-300">&quot;v1&quot;</span>,{"\n"}
-            {"  "}<span className="text-sky-400">&quot;status&quot;</span>: <span className="text-emerald-400">&quot;Online&quot;</span>,{"\n"}
+            {"  "}<span className="text-sky-400">&quot;status&quot;</span>: <span className="text-emerald-400">&quot;200 OK&quot;</span>,{"\n"}
             {"  "}<span className="text-sky-400">&quot;powered_by&quot;</span>: <span className="text-amber-300">&quot;Otakudesu&quot;</span>,{"\n"}
             {"  "}<span className="text-sky-400">&quot;environment&quot;</span>: <span className="text-amber-300">&quot;{isDev ? 'development' : 'production'}&quot;</span>,{"\n"}
             {"  "}<span className="text-sky-400">&quot;message&quot;</span>: <span className="text-amber-300">&quot;Welcome to AnimapleCore. All systems are operational.&quot;</span>,{"\n"}
-            {"  "}<span className="text-sky-400">&quot;available_endpoints&quot;</span>: <span className="text-gray-500">&#123;</span>{"\n"}
-            {"    "}<span className="text-sky-400">&quot;home&quot;</span>: <span className="text-amber-300">&quot;/api/home&quot;</span>,{"\n"}
-            {"    "}<span className="text-sky-400">&quot;ongoing_anime&quot;</span>: <span className="text-amber-300">&quot;/api/ongoing-anime&quot;</span>,{"\n"}
-            {"    "}<span className="text-sky-400">&quot;complete_anime&quot;</span>: <span className="text-amber-300">&quot;/api/complete-anime&quot;</span>,{"\n"}
-            {"    "}<span className="text-sky-400">&quot;schedule&quot;</span>: <span className="text-amber-300">&quot;/api/schedule&quot;</span>,{"\n"}
-            {"    "}<span className="text-sky-400">&quot;genres&quot;</span>: <span className="text-amber-300">&quot;/api/genre&quot;</span>,{"\n"}
-            {"    "}<span className="text-sky-400">&quot;search&quot;</span>: <span className="text-amber-300">&quot;/api/search/&#123;keyword&#125;&quot;</span>,{"\n"}
-            {"    "}<span className="text-sky-400">&quot;anime_details&quot;</span>: <span className="text-amber-300">&quot;/api/anime/&#123;slug&#125;&quot;</span>,{"\n"}
-            {"    "}<span className="text-sky-400">&quot;episode_details&quot;</span>: <span className="text-amber-300">&quot;/api/episode/&#123;slug&#125;&quot;</span>{"\n"}
             {"  "}<span className="text-gray-500">&#125;</span>{"\n"}
             <span className="text-gray-500">&#125;</span>
           </pre>
