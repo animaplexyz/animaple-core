@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from "next/server"
 import search from "@/utils/search";
 
+export const revalidate = 3600;
+
 export async function GET(request: NextRequest, props: { params: Promise<{ keyword: string }> }) {
   const params = await props.params;
   const data = await search(params.keyword)

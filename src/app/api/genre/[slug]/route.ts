@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from "next/server"
 import animeByGenre from "@/utils/animeByGenre";
 
+export const revalidate = 3600;
+
 export async function GET(request: NextRequest, props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
   const { searchParams } = new URL(request.url)

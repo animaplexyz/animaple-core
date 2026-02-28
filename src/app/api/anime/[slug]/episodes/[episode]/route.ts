@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from "next/server"
 import episode from "@/utils/episode";
 
+export const revalidate = 3600;
+
 export async function GET(request: NextRequest, props: { params: Promise<{ slug: string; episode: string }> }) {
   const params = await props.params;
   const urlParts = request.url.split("/")
