@@ -50,11 +50,16 @@ Here are some of the main endpoints provided by AnimapleCore:
 | Endpoint | Method | Description |
 | :--- | :---: | :--- |
 | `/api/home` | `GET` | Get homepage data (latest ongoing & complete anime) |
+| `/api/ongoing-anime/{page}` | `GET` | Get paginated list of currently ongoing anime |
+| `/api/complete-anime/{page}` | `GET` | Get paginated list of completed anime |
 | `/api/search/{keyword}` | `GET` | Search for a specific anime by title |
 | `/api/anime/{slug}` | `GET` | Get detailed information about a specific anime |
-| `/api/episode/{slug}` | `GET` | Get streaming links and details for an episode |
+| `/api/episode/{slug}` | `GET` | Get streaming links and details for a standard episode |
+| `/api/movie/{slug}` | `GET` | Get streaming links and details for an anime movie |
+| `/api/batch/{slug}` | `GET` | Get download links for a full season batch (Zip/Rar) |
 | `/api/schedule` | `GET` | Get the weekly release schedule |
 | `/api/genre` | `GET` | Get all available anime genres |
+| `/api/genre/{genre}/{page}` | `GET` | Get paginated list of anime based on a specific genre |
 
 ## 📝 License
 
