@@ -22,29 +22,29 @@ export default function HomePage() {
         {/* JSON Terminal Window */}
         <div className="bg-[#111111] border border-gray-800/80 rounded-lg p-6 shadow-2xl overflow-x-auto mb-8">
           <pre className="leading-relaxed">
-            <span className="text-gray-500">{"{"}</span>{"\n"}
-            {"  "}<span className="text-sky-400">"name"</span>: <span className="text-amber-300">"AnimapleCore API"</span>,{"\n"}
-            {"  "}<span className="text-sky-400">"version"</span>: <span className="text-amber-300">"v1"</span>,{"\n"}
-            {"  "}<span className="text-sky-400">"status"</span>: <span className="text-emerald-400">"Online"</span>,{"\n"}
-            {"  "}<span className="text-sky-400">"powered_by"</span>: <span className="text-amber-300">"Otakudesu"</span>,{"\n"}
-            {"  "}<span className="text-sky-400">"environment"</span>: <span className="text-amber-300">{"\"" + (isDev ? "development" : "production") + "\""}</span>,{"\n"}
-            {"  "}<span className="text-sky-400">"message"</span>: <span className="text-amber-300">"Welcome to AnimapleCore. All systems are operational."</span>,{"\n"}
-            {"  "}<span className="text-sky-400">"available_endpoints"</span>: <span className="text-gray-500">{"{"}</span>{"\n"}
-            {"    "}<span className="text-sky-400">"home"</span>: <span className="text-amber-300">"/api/home"</span>,{"\n"}
-            {"    "}<span className="text-sky-400">"ongoing_anime"</span>: <span className="text-amber-300">"/api/ongoing-anime"</span>,{"\n"}
-            {"    "}<span className="text-sky-400">"complete_anime"</span>: <span className="text-amber-300">"/api/complete-anime"</span>,{"\n"}
-            {"    "}<span className="text-sky-400">"schedule"</span>: <span className="text-amber-300">"/api/schedule"</span>,{"\n"}
-            {"    "}<span className="text-sky-400">"genres"</span>: <span className="text-amber-300">"/api/genre"</span>,{"\n"}
-            {"    "}<span className="text-sky-400">"search"</span>: <span className="text-amber-300">{"\"/api/search/{keyword}\""}</span>,{"\n"}
-            {"    "}<span className="text-sky-400">"anime_details"</span>: <span className="text-amber-300">{"\"/api/anime/{slug}\""}</span>,{"\n"}
-            {"    "}<span className="text-sky-400">"episode_details"</span>: <span className="text-amber-300">{"\"/api/episode/{slug}\""}</span>{"\n"}
-            {"  "}<span className="text-gray-500">{"}"}</span>{"\n"}
-            <span className="text-gray-500">{"}"}</span>
+            <span className="text-gray-500">&#123;</span>{"\n"}
+            {"  "}<span className="text-sky-400">&quot;name&quot;</span>: <span className="text-amber-300">&quot;AnimapleCore API&quot;</span>,{"\n"}
+            {"  "}<span className="text-sky-400">&quot;version&quot;</span>: <span className="text-amber-300">&quot;v1&quot;</span>,{"\n"}
+            {"  "}<span className="text-sky-400">&quot;status&quot;</span>: <span className="text-emerald-400">&quot;Online&quot;</span>,{"\n"}
+            {"  "}<span className="text-sky-400">&quot;powered_by&quot;</span>: <span className="text-amber-300">&quot;Otakudesu&quot;</span>,{"\n"}
+            {"  "}<span className="text-sky-400">&quot;environment&quot;</span>: <span className="text-amber-300">&quot;{isDev ? 'development' : 'production'}&quot;</span>,{"\n"}
+            {"  "}<span className="text-sky-400">&quot;message&quot;</span>: <span className="text-amber-300">&quot;Welcome to AnimapleCore. All systems are operational.&quot;</span>,{"\n"}
+            {"  "}<span className="text-sky-400">&quot;available_endpoints&quot;</span>: <span className="text-gray-500">&#123;</span>{"\n"}
+            {"    "}<span className="text-sky-400">&quot;home&quot;</span>: <span className="text-amber-300">&quot;/api/home&quot;</span>,{"\n"}
+            {"    "}<span className="text-sky-400">&quot;ongoing_anime&quot;</span>: <span className="text-amber-300">&quot;/api/ongoing-anime&quot;</span>,{"\n"}
+            {"    "}<span className="text-sky-400">&quot;complete_anime&quot;</span>: <span className="text-amber-300">&quot;/api/complete-anime&quot;</span>,{"\n"}
+            {"    "}<span className="text-sky-400">&quot;schedule&quot;</span>: <span className="text-amber-300">&quot;/api/schedule&quot;</span>,{"\n"}
+            {"    "}<span className="text-sky-400">&quot;genres&quot;</span>: <span className="text-amber-300">&quot;/api/genre&quot;</span>,{"\n"}
+            {"    "}<span className="text-sky-400">&quot;search&quot;</span>: <span className="text-amber-300">&quot;/api/search/&#123;keyword&#125;&quot;</span>,{"\n"}
+            {"    "}<span className="text-sky-400">&quot;anime_details&quot;</span>: <span className="text-amber-300">&quot;/api/anime/&#123;slug&#125;&quot;</span>,{"\n"}
+            {"    "}<span className="text-sky-400">&quot;episode_details&quot;</span>: <span className="text-amber-300">&quot;/api/episode/&#123;slug&#125;&quot;</span>{"\n"}
+            {"  "}<span className="text-gray-500">&#125;</span>{"\n"}
+            <span className="text-gray-500">&#125;</span>
           </pre>
         </div>
 
         {/* Footer Credit */}
-        <footer className="text-center text-xs text-gray-500">
+        <footer className="text-center text-xs text-gray-500 border-t border-gray-800/60 pt-5">
           <p className="mb-1">&copy; {new Date().getFullYear()} Animaple Project</p>
           <p>
             Developed by{" "}
