@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server"
 import animeByGenre from "@/utils/animeByGenre";
 
-export async function GET(request: NextRequest, props: { params: Promise<{ slug: string; page: number }> }) {
+export async function GET(request: NextRequest, props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
   const { searchParams } = new URL(request.url)
   const reqPage = searchParams.get("page")
