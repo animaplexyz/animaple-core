@@ -112,7 +112,7 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
               </div>
             )}
 
-            {/* --- FITUR BARU: Interactive Playground --- */}
+            {/* Interactive Playground */}
             <div className="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest flex items-center gap-1.5">
@@ -178,7 +178,7 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
                 <span className="text-[11px] font-mono font-medium tracking-wide truncate ml-3 mr-auto sm:ml-0 sm:mr-0 text-center flex-1">
                   {liveResponse ? (
                     <span className="flex items-center justify-center gap-2">
-                      <span className={status === 200 ? "text-emerald-400" : "text-rose-400"}>Live Response ({status})</span>
+                      <span className={status === 200 ? "text-emerald-400" : (status === 429 ? "text-orange-400" : "text-rose-400")}>Live Response ({status})</span>
                       <span className="text-slate-700">|</span>
                       <span className="text-indigo-400">{fetchTime}ms</span>
                     </span>
@@ -761,8 +761,8 @@ export default function DocumentationPage() {
                 <p className="mb-3">This API is designed for speed and reliability using a dual-layer caching strategy:</p>
                 <ul className="list-disc pl-5 space-y-1.5 mb-4">
                   <li><strong>Edge Caching:</strong> All endpoints are cached at the Vercel Edge Network. Response times for cached hits are typically under 50ms.</li>
-                  <li><strong>Automated Revalidation:</strong> A background Cron Job triggers every 1 hour (3600s) to silently update the cache from upstream sources.</li>
-                  <li><strong>Rate Limits:</strong> Because responses are served from the Edge Cache, there are <strong>no strict rate limits</strong> applied to consumers.</li>
+                  <li><strong>Automated Revalidation:</strong> Background Cron Jobs trigger every 1 hour to silently update the cache from upstream sources.</li>
+                  <li><strong>Public Rate Limits:</strong> To ensure high availability, public access is securely protected by Upstash Redis. Requests are limited to <strong>30 requests per minute</strong> per IP. Rate limit headers are included in every response.</li>
                 </ul>
               </div>
 
@@ -783,6 +783,10 @@ export default function DocumentationPage() {
                     <tr>
                       <td className="py-2.5 px-4 font-mono font-medium text-amber-600 whitespace-nowrap">400 Bad Req</td>
                       <td className="py-2.5 px-4">Missing required parameters (e.g., empty slug or keyword).</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 px-4 font-mono font-medium text-orange-500 whitespace-nowrap">429 Too Many Req</td>
+                      <td className="py-2.5 px-4">Rate limit exceeded (Max 30 requests/minute per IP).</td>
                     </tr>
                     <tr>
                       <td className="py-2.5 px-4 font-mono font-medium text-rose-600 whitespace-nowrap">500 Server Err</td>
