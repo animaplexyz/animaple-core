@@ -13,7 +13,7 @@ const ratelimit = new Ratelimit({
   limiter: Ratelimit.slidingWindow(30, '1 m'),
 });
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   if (!request.nextUrl.pathname.startsWith('/api')) {
     return NextResponse.next();
   }
@@ -23,7 +23,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const ip = request.ip ?? '127.0.0.1';
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  const realIp = request.headers.get('x-real-ip');
+  
+  const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : (realIp ?? '127.0.0.1');
   
   const { success, limit, reset, remaining } = await ratelimit.limit(ip);
 
