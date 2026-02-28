@@ -3,6 +3,6 @@ import completeAnime from "@/utils/completeAnime";
 
 export async function GET(request: NextRequest, props: { params: Promise<{ page: number }> }) {
   const params = await props.params;
-  const data = await completeAnime(params.page)
+  const data = await completeAnime(Number(params.page))
   return NextResponse.json({ data: data }, { status: 200 })
 }
