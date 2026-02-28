@@ -8,16 +8,7 @@ const home = async (): Promise<any> => {
   const BASEURL = process.env.BASEURL;
   const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY;
 
-  if (!BASEURL || !SCRAPER_API_KEY) {
-    return { 
-      error: "CRITICAL ERROR: Variabel Vercel belum lengkap!",
-      status_BASEURL: BASEURL ? "Aman" : "KOSONG",
-      status_APIKEY: SCRAPER_API_KEY ? "Aman" : "KOSONG",
-      solusi: "Silakan ke Vercel > Deployments > Klik titik tiga > Redeploy"
-    };
-  }
-
-  const targetUrl = `https://api.scraperapi.com/?api_key=${SCRAPER_API_KEY}&url=${BASEURL}&render=true`;
+  const targetUrl = `https://api.scraperapi.com/?api_key=${SCRAPER_API_KEY}&url=${BASEURL}`;
 
   try {
     const { data } = await axios.get(targetUrl);
@@ -35,7 +26,7 @@ const home = async (): Promise<any> => {
     };
   } catch (error: any) {
     return {
-      error: "ScraperAPI Gagal Menembus Otakudesu",
+      error: "Gagal mengambil data",
       message: error.message
     };
   }
