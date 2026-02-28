@@ -35,6 +35,185 @@ const CopyButton = ({ text, variant = 'dark' }: { text: string, variant?: 'light
   );
 };
 
+const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
+  const [paramValues, setParamValues] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [liveResponse, setLiveResponse] = useState<string | null>(null);
+  const [fetchTime, setFetchTime] = useState<string | null>(null);
+  const [status, setStatus] = useState<number | null>(null);
+
+  const handleRun = async () => {
+    setIsLoading(true);
+    setLiveResponse(null);
+    setFetchTime(null);
+    setStatus(null);
+
+    try {
+      let url = ep.path;
+      ep.params?.forEach((p: any) => {
+        const val = paramValues[p.name] || (p.type === 'number' ? '1' : 'naruto');
+        url = url.replace(`{${p.name}}`, val);
+      });
+
+      const startTime = performance.now();
+      const res = await fetch(url);
+      const data = await res.json();
+      const endTime = performance.now();
+
+      setStatus(res.status);
+      setFetchTime((endTime - startTime).toFixed(0));
+      setLiveResponse(JSON.stringify(data, null, 2));
+    } catch (error: any) {
+      setStatus(500);
+      setLiveResponse(JSON.stringify({ error: error.message || "Failed to fetch. Network Error." }, null, 2));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const displayJson = liveResponse || ep.json;
+
+  return (
+    <div id={ep.id} className={`scroll-mt-20 lg:scroll-mt-0 border-b border-slate-200 ${idx % 2 === 0 ? 'bg-slate-50/20' : 'bg-white'}`}>
+      <div className="w-full px-5 sm:px-8 lg:px-10 xl:px-12 py-10 lg:py-14">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-10">
+          
+          <div className="col-span-1">
+            <div className="flex items-center gap-3 mb-3">
+              <h3 className="text-xl font-bold text-slate-900 tracking-tight">{ep.title}</h3>
+            </div>
+            
+            <p className="text-sm text-slate-600 mb-6 leading-relaxed text-justify">{ep.desc}</p>
+            
+            <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">HTTP Request</h4>
+            <div className="flex items-center gap-3 bg-white border border-slate-200 px-3 py-2 rounded-md mb-6 w-max max-w-full overflow-x-auto">
+              <span className="text-indigo-600 font-bold text-xs tracking-wide shrink-0">
+                {ep.method}
+              </span>
+              <code className="text-[13px] font-mono font-medium text-slate-700 whitespace-nowrap">{ep.path}</code>
+            </div>
+
+            {ep.params && ep.params.length > 0 && (
+              <div className="mb-8">
+                <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Parameters</h4>
+                <ul className="space-y-3">
+                  {ep.params.map((param: any, i: number) => (
+                    <li key={i} className="text-sm border-l-2 border-slate-200 pl-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <code className="font-mono font-semibold text-slate-900">{param.name}</code>
+                        <span className="font-mono text-[11px] text-slate-500">{param.type}</span>
+                        {param.required && <span className="text-[9px] font-bold text-rose-600 bg-rose-50 border border-rose-100 px-1.5 py-0.5 rounded uppercase tracking-wider">Required</span>}
+                      </div>
+                      <p className="text-slate-600 text-[13px] leading-relaxed text-justify">{param.desc}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* --- FITUR BARU: Interactive Playground --- */}
+            <div className="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Interactive Test
+                </h4>
+                {liveResponse && (
+                  <button onClick={() => { setLiveResponse(null); setStatus(null); setFetchTime(null); }} className="text-[10px] font-bold text-slate-400 hover:text-rose-500 uppercase tracking-wider transition-colors">
+                    Reset
+                  </button>
+                )}
+              </div>
+
+              {ep.params && ep.params.length > 0 && (
+                <div className="space-y-3 mb-4">
+                  {ep.params.map((param: any, i: number) => (
+                    <div key={i} className="flex flex-col gap-1.5">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase flex justify-between">
+                        <span>{param.name}</span>
+                        {param.required && <span className="text-rose-400">*</span>}
+                      </label>
+                      <input
+                        type="text"
+                        placeholder={`e.g., ${param.type === 'number' ? '1' : 'naruto'}`}
+                        className="bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                        value={paramValues[param.name] || ''}
+                        onChange={(e) => setParamValues({...paramValues, [param.name]: e.target.value})}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <button
+                onClick={handleRun}
+                disabled={isLoading}
+                className="w-full bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-500 text-white font-bold text-xs py-2.5 px-4 rounded-md transition-colors flex justify-center items-center gap-2"
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending Request...
+                  </>
+                ) : "Send API Request"}
+              </button>
+            </div>
+          </div>
+
+          <div className="col-span-1 lg:sticky lg:top-10 self-start mt-4 lg:mt-0">
+            <div className="bg-[#0A0A0B] rounded-xl border border-slate-800 flex flex-col w-full shadow-lg">
+              <div className="bg-[#121214] px-4 py-2.5 border-b border-slate-800 flex justify-between items-center rounded-t-xl">
+                <div className="flex gap-2 shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]"></div>
+                </div>
+                <span className="text-[11px] font-mono font-medium tracking-wide truncate ml-3 mr-auto sm:ml-0 sm:mr-0 text-center flex-1">
+                  {liveResponse ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className={status === 200 ? "text-emerald-400" : "text-rose-400"}>Live Response ({status})</span>
+                      <span className="text-slate-700">|</span>
+                      <span className="text-indigo-400">{fetchTime}ms</span>
+                    </span>
+                  ) : (
+                    <span className="text-slate-500">Example Response</span>
+                  )}
+                </span>
+                <div className="shrink-0">
+                  <CopyButton text={displayJson} variant="dark" />
+                </div>
+              </div>
+              
+              <div className="p-4 overflow-x-auto custom-scrollbar-dark max-h-[600px]">
+                <pre className="text-[12px] sm:text-[13px] leading-snug font-mono text-emerald-400 w-max min-w-full">
+                  <code dangerouslySetInnerHTML={{ 
+                    __html: displayJson
+                      .replace(/"(.*?)":/g, '<span class="text-indigo-300">"$1"</span>:') 
+                      .replace(/:\s"(.*?)"/g, ': <span class="text-emerald-400">"$1"</span>') 
+                      .replace(/:\s([0-9.]+)/g, ': <span class="text-amber-300">$1</span>') 
+                      .replace(/\[/g, '<span class="text-slate-400">[</span>')
+                      .replace(/\]/g, '<span class="text-slate-400">]</span>')
+                      .replace(/\{/g, '<span class="text-slate-400">{</span>')
+                      .replace(/\}/g, '<span class="text-slate-400">}</span>')
+                  }} />
+                </pre>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function DocumentationPage() {
   const [activeSection, setActiveSection] = useState('overview');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -434,7 +613,7 @@ export default function DocumentationPage() {
       {/* Sidebar Kiri */}
       <aside className={`fixed lg:sticky inset-y-0 left-0 z-50 w-[280px] xl:w-[320px] bg-slate-50 border-r border-slate-200 flex flex-col h-screen overflow-hidden transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         
-        {/* Judul Sidebar - FIXED (Nggak ikutan scroll) */}
+        {/* Judul Sidebar */}
         <div className="py-8 lg:py-10 px-6 lg:pl-10 xl:pl-12 lg:pr-8 border-b lg:border-none bg-slate-50 relative">
           <button 
             onClick={() => setIsMobileMenuOpen(false)}
@@ -620,81 +799,7 @@ export default function DocumentationPage() {
         {/* Endpoints Mapping */}
         <div>
           {endpoints.map((ep, idx) => (
-            <div key={ep.id} id={ep.id} className={`scroll-mt-20 lg:scroll-mt-0 border-b border-slate-200 ${idx % 2 === 0 ? 'bg-slate-50/20' : 'bg-white'}`}>
-              <div className="w-full px-5 sm:px-8 lg:px-10 xl:px-12 py-10 lg:py-14">
-                
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-10">
-                  
-                  <div className="col-span-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-bold text-slate-900 tracking-tight">{ep.title}</h3>
-                    </div>
-                    
-                    <p className="text-sm text-slate-600 mb-6 leading-relaxed text-justify">{ep.desc}</p>
-                    
-                    <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">HTTP Request</h4>
-                    <div className="flex items-center gap-3 bg-white border border-slate-200 px-3 py-2 rounded-md mb-6 w-max max-w-full overflow-x-auto">
-                      <span className="text-indigo-600 font-bold text-xs tracking-wide shrink-0">
-                        {ep.method}
-                      </span>
-                      <code className="text-[13px] font-mono font-medium text-slate-700 whitespace-nowrap">{ep.path}</code>
-                    </div>
-
-                    {ep.params.length > 0 && (
-                      <div>
-                        <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Parameters</h4>
-                        <ul className="space-y-3">
-                          {ep.params.map((param, i) => (
-                            <li key={i} className="text-sm border-l-2 border-slate-200 pl-3">
-                              <div className="flex items-center gap-2 mb-1">
-                                <code className="font-mono font-semibold text-slate-900">{param.name}</code>
-                                <span className="font-mono text-[11px] text-slate-500">{param.type}</span>
-                                {param.required && <span className="text-[9px] font-bold text-rose-600 bg-rose-50 border border-rose-100 px-1.5 py-0.5 rounded uppercase tracking-wider">Required</span>}
-                              </div>
-                              <p className="text-slate-600 text-[13px] leading-relaxed text-justify">{param.desc}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="col-span-1 lg:sticky lg:top-10 self-start">
-                    <div className="bg-[#0A0A0B] rounded-xl border border-slate-800 flex flex-col w-full shadow-lg">
-                      <div className="bg-[#121214] px-4 py-2.5 border-b border-slate-800 flex justify-between items-center rounded-t-xl">
-                        <div className="flex gap-2 shrink-0">
-                          <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]"></div>
-                          <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]"></div>
-                          <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]"></div>
-                        </div>
-                        <span className="text-[11px] font-mono text-slate-500 font-medium tracking-wide truncate ml-3 mr-auto sm:ml-0 sm:mr-0 text-center flex-1">
-                          Example Response
-                        </span>
-                        <div className="shrink-0">
-                          <CopyButton text={ep.json} variant="dark" />
-                        </div>
-                      </div>
-                      
-                      <div className="p-4 overflow-x-auto custom-scrollbar-dark">
-                        <pre className="text-[12px] sm:text-[13px] leading-snug font-mono text-emerald-400 w-max min-w-full">
-                          <code dangerouslySetInnerHTML={{ 
-                            __html: ep.json
-                              .replace(/"(.*?)":/g, '<span class="text-indigo-300">"$1"</span>:') 
-                              .replace(/:\s"(.*?)"/g, ': <span class="text-emerald-400">"$1"</span>') 
-                              .replace(/:\s([0-9.]+)/g, ': <span class="text-amber-300">$1</span>') 
-                              .replace(/\[/g, '<span class="text-slate-400">[</span>')
-                              .replace(/\]/g, '<span class="text-slate-400">]</span>')
-                              .replace(/\{/g, '<span class="text-slate-400">{</span>')
-                              .replace(/\}/g, '<span class="text-slate-400">}</span>')
-                          }} />
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
+            <EndpointCard key={ep.id} ep={ep} idx={idx} />
           ))}
         </div>
       </main>
