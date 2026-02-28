@@ -1,22 +1,20 @@
-import axios from 'axios';
+import { fetchHtml } from './fetchHtml';
 import getBatch from '@/lib/getBatch';
 import scrapeBatch from '@/lib/scrapeBatch';
 
-const { BASEURL } = process.env;
-const batch = async ({ batchSlug, animeSlug }: {
-  batchSlug?: string, animeSlug?: string
-}) => {
+const batch = async ({ batchSlug, animeSlug }: { batchSlug?: string, animeSlug?: string }) => {
   let batch: string | undefined = batchSlug;
 
   if (animeSlug) {
-    const response = await axios.get(`${BASEURL}/anime/${animeSlug}`);
-    const batchData = getBatch(response.data);
+    const data = await fetchHtml(`/anime/${animeSlug}`);
+    const batchData = getBatch(data);
     batch = batchData?.slug;
   }
+  
   if (!batch) return false;
 
-  const response = await axios.get(`${BASEURL}/batch/${batch}`);
-  const result = scrapeBatch(response.data);
+  const data = await fetchHtml(`/batch/${batch}`);
+  const result = scrapeBatch(data);
 
   return result;
 };

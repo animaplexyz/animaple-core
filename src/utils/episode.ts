@@ -1,8 +1,7 @@
-import axios from 'axios';
+import { fetchHtml } from './fetchHtml';
 import episodes from './episodes';
 import scrapeEpisode from '@/lib/scrapeEpisode';
 
-const { BASEURL } = process.env;
 const episode = async ({ episodeSlug, animeSlug, episodeNumber }: {
   episodeSlug?: string | undefined, animeSlug?: string | undefined, episodeNumber?: number | undefined
 }) => {
@@ -20,7 +19,7 @@ const episode = async ({ episodeSlug, animeSlug, episodeNumber }: {
     slug = `${prefixEpisodeSlug}-episode-${episodeNumber - (parseInt(firstEpisodeNumber) == 0 ? 1 : 0)}-sub-indo`;
   }
 
-  const { data } = await axios.get(`${BASEURL}/episode/${slug}`);
+  const data = await fetchHtml(`/episode/${slug}`);
   const result = scrapeEpisode(data);
 
   return result;

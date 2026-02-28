@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { load } from 'cheerio';
+import { fetchHtml } from './fetchHtml';
 import scrapeOngoingAnime from '@/lib/scapeOngoingAnime';
 import scrapeCompleteAnime from '@/lib/scrapeCompleteAnime';
 import type { ongoingAnime as ongoingAnimeType, completeAnime as completeAnimeType } from '@/types/types';
@@ -15,13 +15,8 @@ interface ErrorData {
 }
 
 const home = async (): Promise<HomeData | ErrorData> => {
-  const BASEURL = process.env.BASEURL || '';
-  const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY || '';
-
-  const targetUrl = `https://api.scraperapi.com/?api_key=${SCRAPER_API_KEY}&url=${BASEURL}`;
-
   try {
-    const { data } = await axios.get(targetUrl);
+    const data = await fetchHtml('');
     const $ = load(data);
     
     const ongoingAnimeEls = $('.venutama .rseries .rapi:first .venz ul li').toString();

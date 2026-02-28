@@ -1,15 +1,14 @@
-import axios from "axios";
+import { fetchHtml } from './fetchHtml';
 import { load } from "cheerio";
 
-const { BASEURL } = process.env;
 const movie = async (slug: string): Promise<any> => {
-  const { data } = await axios.get(`${BASEURL}episode/${slug}`);
+  const data = await fetchHtml(`/episode/${slug}`);
   const $ = load(data);
 
   const checkUrl = $(".episodelist ul li span a").attr("href");
   const fixedUrl = checkUrl?.split("/")[4];
 
-  const { data: movieData } = await axios.get(`${BASEURL}episode/${fixedUrl}`);
+  const movieData = await fetchHtml(`/episode/${fixedUrl}`);
   const $$ = load(movieData);
 
   const title = $(".posttl").html() ?? $$(".posttl").html()
