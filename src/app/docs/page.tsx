@@ -72,6 +72,72 @@ export default function DocumentationPage() {
 }`
     },
     {
+      id: 'ongoing-anime',
+      title: 'Ongoing Anime',
+      path: '/api/ongoing-anime/{page}',
+      method: 'GET',
+      desc: 'Get paginated list of currently ongoing anime.',
+      params: [
+        { name: 'page', type: 'number', required: true, desc: 'The page number to fetch (e.g., 1).' }
+      ],
+      json: `{
+  "data": {
+    "paginationData": {
+      "current_page": 1,
+      "last_visible_page": 5,
+      "has_next_page": true,
+      "next_page": 2,
+      "has_previous_page": false,
+      "previous_page": null
+    },
+    "ongoingAnimeData": [
+      {
+        "title": "Enen no Shouboutai: San no Shou Part 2",
+        "slug": "enen-shouboutai-season-3-p2-sub-indo",
+        "poster": "https://otakudesu.best/.../152472.jpg",
+        "current_episode": "Episode 8",
+        "release_day": "Sabtu",
+        "newest_release_date": "28 Feb",
+        "otakudesu_url": "https://otakudesu.best/..."
+      }
+    ]
+  }
+}`
+    },
+    {
+      id: 'complete-anime',
+      title: 'Complete Anime',
+      path: '/api/complete-anime/{page}',
+      method: 'GET',
+      desc: 'Get paginated list of completed anime.',
+      params: [
+        { name: 'page', type: 'number', required: true, desc: 'The page number to fetch (e.g., 1).' }
+      ],
+      json: `{
+  "data": {
+    "paginationData": {
+      "current_page": 1,
+      "last_visible_page": 154,
+      "has_next_page": true,
+      "next_page": 2,
+      "has_previous_page": false,
+      "previous_page": null
+    },
+    "completeAnimeData": [
+      {
+        "title": "Towa no Yuugure",
+        "slug": "towa-yuugure-sub-indo",
+        "poster": "https://otakudesu.best/.../towa.jpg",
+        "episode_count": "12",
+        "rating": "6.52",
+        "last_release_date": "07 Feb",
+        "otakudesu_url": "https://otakudesu.best/..."
+      }
+    ]
+  }
+}`
+    },
+    {
       id: 'search',
       title: 'Search Anime',
       path: '/api/search/{keyword}',
@@ -132,23 +198,178 @@ export default function DocumentationPage() {
       ],
       json: `{
   "data": {
-    "title": "Sousou no Frieren S2 Episode 6 Subtitle Indonesia",
-    "iframe_url": "https://desustream.me/frieren-s2-ep-6/",
-    "download_links": [
+    "episode": "Sousou no Frieren S2 Episode 6 Subtitle Indonesia",
+    "stream_url": "https://desustream.me/frieren-s2-ep-6/",
+    "has_next_episode": false,
+    "next_episode": null,
+    "has_previous_episode": true,
+    "previous_episode": {
+      "slug": "frieren-s2-episode-5-sub-indo",
+      "otakudesu_url": "https://otakudesu.best/..."
+    },
+    "download_urls": {
+      "mp4": [
+        {
+          "resolution": "360p",
+          "urls": [
+            { "provider": "Zippyshare", "url": "https://..." }
+          ]
+        }
+      ],
+      "mkv": [
+        {
+          "resolution": "720p",
+          "urls": [
+            { "provider": "Mega", "url": "https://..." }
+          ]
+        }
+      ]
+    }
+  }
+}`
+    },
+    {
+      id: 'movie',
+      title: 'Movie Details',
+      path: '/api/movie/{slug}',
+      method: 'GET',
+      desc: 'Retrieves streaming iframe URLs and multi-resolution direct download links specifically for anime movies.',
+      params: [
+        { name: 'slug', type: 'string', required: true, desc: 'The unique slug of the anime movie.' }
+      ],
+      json: `{
+  "data": {
+    "title": "Kimi no Na wa.",
+    "iframeSrc": "https://desustream.me/kimi-no-na-wa/",
+    "downloadLinks": [
       {
-        "quality": "360p",
-        "servers": [
-          { "server_name": "Zippyshare", "url": "https://..." },
-          { "server_name": "Google Drive", "url": "https://..." }
-        ]
-      },
-      {
-        "quality": "720p",
-        "servers": [
-          { "server_name": "Mega", "url": "https://..." }
+        "quality": "1080p",
+        "links": [
+          {
+            "name": "Google Drive",
+            "url": "https://..."
+          }
         ]
       }
     ]
+  }
+}`
+    },
+    {
+      id: 'batch',
+      title: 'Batch Download',
+      path: '/api/batch/{slug}',
+      method: 'GET',
+      desc: 'Fetches download links for a full season batch (usually in Zip/Rar format).',
+      params: [
+        { name: 'slug', type: 'string', required: true, desc: 'The unique slug of the batch.' }
+      ],
+      json: `{
+  "data": {
+    "batch": "Sousou no Frieren S1 Batch Subtitle Indonesia",
+    "download_urls": [
+      {
+        "resolution": "720p",
+        "file_size": "2.4 GB",
+        "urls": [
+          {
+            "provider": "Google Drive",
+            "url": "https://..."
+          },
+          {
+            "provider": "Mega",
+            "url": "https://..."
+          }
+        ]
+      }
+    ]
+  }
+}`
+    },
+    {
+      id: 'schedule',
+      title: 'Release Schedule',
+      path: '/api/schedule',
+      method: 'GET',
+      desc: 'Fetches the weekly release schedule for all ongoing anime.',
+      params: [],
+      json: `{
+  "data": [
+    {
+      "day": "Senin",
+      "animeList": [
+        {
+          "title": "Tsuki ga Michibiku Isekai Douchuu",
+          "slug": "tsukimichi-sub-indo",
+          "otakudesu_url": "https://otakudesu.best/..."
+        }
+      ]
+    }
+  ]
+}`
+    },
+    {
+      id: 'genre',
+      title: 'Genre List',
+      path: '/api/genre',
+      method: 'GET',
+      desc: 'Retrieves a list of all available anime genres in the database.',
+      params: [],
+      json: `{
+  "data": [
+    {
+      "name": "Action",
+      "slug": "action",
+      "otakudesu_url": "https://otakudesu.best/genres/action/"
+    },
+    {
+      "name": "Adventure",
+      "slug": "adventure",
+      "otakudesu_url": "https://otakudesu.best/genres/adventure/"
+    }
+  ]
+}`
+    },
+    {
+      id: 'genre-page',
+      title: 'Anime by Genre',
+      path: '/api/genre/{genre}/{page}',
+      method: 'GET',
+      desc: 'Get paginated list of anime based on a specific genre.',
+      params: [
+        { name: 'genre', type: 'string', required: true, desc: 'The genre slug (e.g., "action").' },
+        { name: 'page', type: 'number', required: true, desc: 'The page number to fetch.' }
+      ],
+      json: `{
+  "data": {
+    "anime": [
+      {
+        "title": "Naruto Shippuden",
+        "slug": "naruto-shippuden-sub-indo",
+        "poster": "https://otakudesu.best/.../naruto.jpg",
+        "rating": "8.5",
+        "episode_count": "500",
+        "season": "Fall 2007",
+        "studio": "Studio Pierrot",
+        "genres": [
+          {
+            "name": "Action",
+            "slug": "action",
+            "otakudesu_url": "https://..."
+          }
+        ],
+        "synopsis": "It has been two and a half years...",
+        "otakudesu_url": "https://otakudesu.best/..."
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_visible_page": 20,
+      "has_next_page": true,
+      "next_page": 2,
+      "has_previous_page": false,
+      "previous_page": null
+    }
   }
 }`
     }
@@ -211,28 +432,30 @@ export default function DocumentationPage() {
       )}
 
       {/* Sidebar Kiri */}
-      <aside className={`fixed lg:sticky inset-y-0 left-0 z-50 w-[280px] xl:w-[320px] bg-slate-50 border-r border-slate-200 py-8 lg:py-10 px-6 lg:pl-10 xl:pl-12 lg:pr-8 flex-shrink-0 h-screen overflow-y-auto custom-scrollbar transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+      <aside className={`fixed lg:sticky inset-y-0 left-0 z-50 w-[280px] xl:w-[320px] bg-slate-50 border-r border-slate-200 flex flex-col h-screen overflow-hidden transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        
+        {/* Judul Sidebar - FIXED (Nggak ikutan scroll) */}
+        <div className="py-8 lg:py-10 px-6 lg:pl-10 xl:pl-12 lg:pr-8 border-b lg:border-none bg-slate-50 relative">
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="lg:hidden absolute top-10 right-6 p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200 rounded-full transition-colors"
+            aria-label="Close Menu"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
 
-        <button 
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="lg:hidden absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200 rounded-full transition-colors"
-          aria-label="Close Menu"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        <div className="mb-10">
           <Link href="/" className="block" onClick={() => setIsMobileMenuOpen(false)}>
             <h2 className="text-xl font-bold tracking-tight text-slate-900 leading-none">Animaple</h2>
             <p className="text-[10px] font-mono font-bold text-indigo-600 mt-1.5 uppercase tracking-widest">Core API v1.0</p>
           </Link>
         </div>
         
-        <nav className="space-y-8 text-sm font-medium">
+        {/* Navigasi - SCROLLABLE */}
+        <nav className="flex-1 px-6 lg:pl-10 xl:pl-12 lg:pr-8 pb-10 overflow-y-auto custom-scrollbar space-y-8 text-sm font-medium">
           <div>
-            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Introduction</h3>
+            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3 mt-4">Introduction</h3>
             <div className="space-y-2.5 flex flex-col text-slate-500">
               <Link 
                 href="#overview" 
@@ -260,7 +483,7 @@ export default function DocumentationPage() {
           
           <div>
             <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">API Reference</h3>
-            <div className="space-y-3 flex flex-col border-l border-slate-200 ml-1 pl-4 text-slate-500">
+            <div className="space-y-3 flex flex-col border-l border-slate-200 ml-1 pl-4 text-slate-500 pb-4">
               {endpoints.map((ep) => (
                 <Link 
                   key={ep.id} 
@@ -283,7 +506,6 @@ export default function DocumentationPage() {
         <div className="w-full px-5 sm:px-8 lg:px-10 xl:px-12 pt-8 pb-10 lg:pt-10 lg:pb-14 border-b border-slate-200 bg-white">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-10">
             
-            {/* Kiri: Judul, Base URL, dan Credits */}
             <div className="col-span-1">
               <h1 id="overview" className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight scroll-mt-28 lg:scroll-mt-24 leading-none lg:leading-none">
                 Documentation
@@ -354,7 +576,6 @@ export default function DocumentationPage() {
               </div>
             </div>
 
-            {/* Kanan: Architecture & Errors */}
             <div className="col-span-1 lg:sticky lg:top-10 self-start mt-4 lg:mt-0">
               <h2 id="architecture" className="text-xl font-bold text-slate-900 mb-3 scroll-mt-28 lg:scroll-mt-24 tracking-tight">Architecture & Limits</h2>
               <div className="prose prose-slate prose-sm max-w-none text-slate-600 mb-8 text-justify">
@@ -404,7 +625,6 @@ export default function DocumentationPage() {
                 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-10">
                   
-                  {/* Penjelasan Endpoint */}
                   <div className="col-span-1">
                     <div className="flex items-center gap-3 mb-3">
                       <h3 className="text-xl font-bold text-slate-900 tracking-tight">{ep.title}</h3>
@@ -426,7 +646,7 @@ export default function DocumentationPage() {
                         <ul className="space-y-3">
                           {ep.params.map((param, i) => (
                             <li key={i} className="text-sm border-l-2 border-slate-200 pl-3">
-                              <div className="flex flex-wrap items-center gap-2 mb-1">
+                              <div className="flex items-center gap-2 mb-1">
                                 <code className="font-mono font-semibold text-slate-900">{param.name}</code>
                                 <span className="font-mono text-[11px] text-slate-500">{param.type}</span>
                                 {param.required && <span className="text-[9px] font-bold text-rose-600 bg-rose-50 border border-rose-100 px-1.5 py-0.5 rounded uppercase tracking-wider">Required</span>}
@@ -439,7 +659,6 @@ export default function DocumentationPage() {
                     )}
                   </div>
 
-                  {/* Blok Kode JSON */}
                   <div className="col-span-1 lg:sticky lg:top-10 self-start">
                     <div className="bg-[#0A0A0B] rounded-xl border border-slate-800 flex flex-col w-full shadow-lg">
                       <div className="bg-[#121214] px-4 py-2.5 border-b border-slate-800 flex justify-between items-center rounded-t-xl">
