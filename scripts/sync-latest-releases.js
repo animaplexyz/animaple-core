@@ -3,8 +3,7 @@ const fs = require('fs');
 async function syncDynamicContent() {
   try {
     console.log('Memulai proses pengambilan data dari API...');
-    
-    // Mengambil data dari endpoint utama
+
     const response = await fetch('https://animaple-core.vercel.app/api/home');
     if (!response.ok) {
       throw new Error(`Gagal mengambil data. Status HTTP: ${response.status}`);
