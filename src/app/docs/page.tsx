@@ -45,11 +45,23 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
   useEffect(() => {
     const initialValues: Record<string, string> = {};
     ep.params?.forEach((param: any) => {
-      initialValues[param.name] = param.type === 'number' ? '1' 
-        : (ep.id === 'movie' ? 'kimi-no-na-wa-sub-indo' 
-        : (ep.id === 'batch' ? 'frieren-s1-batch-sub-indo'
-        : (ep.id === 'genre-page' && param.name === 'genre' ? 'action' 
-        : 'naruto')));
+      if (param.type === 'number') {
+        initialValues[param.name] = '1';
+      } else if (ep.id === 'search') {
+        initialValues[param.name] = 'frieren';
+      } else if (ep.id === 'anime-details') {
+        initialValues[param.name] = 'sousou-frieren-sub-indo';
+      } else if (ep.id === 'episode-details') {
+        initialValues[param.name] = 'snf-episode-1-sub-indo';
+      } else if (ep.id === 'batch') {
+        initialValues[param.name] = 'snf-batch-sub-indo';
+      } else if (ep.id === 'movie') {
+        initialValues[param.name] = 'kimi-no-na-wa-sub-indo';
+      } else if (ep.id === 'genre-page' && param.name === 'genre') {
+        initialValues[param.name] = 'action';
+      } else {
+        initialValues[param.name] = 'frieren';
+      }
     });
     setParamValues(initialValues);
   }, [ep]);
@@ -63,7 +75,7 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
     try {
       let url = ep.path;
       ep.params?.forEach((p: any) => {
-        const val = paramValues[p.name] || (p.type === 'number' ? '1' : 'naruto');
+        const val = paramValues[p.name] || (p.type === 'number' ? '1' : 'frieren');
         url = url.replace(`{${p.name}}`, val);
       });
 
