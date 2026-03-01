@@ -59,7 +59,7 @@ export default function TermsOfService() {
                 href="https://github.com/ofikur" 
                 target="_blank" 
                 rel="noreferrer" 
-                className="font-bold text-indigo-600 hover:text-indigo-700 hover:underline transition-all"
+                className="text-indigo-600 hover:text-indigo-700 hover:underline transition-all"
               >
                 Ofikur R.
               </a>
