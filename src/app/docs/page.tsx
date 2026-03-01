@@ -42,7 +42,6 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
   const [fetchTime, setFetchTime] = useState<string | null>(null);
   const [status, setStatus] = useState<number | null>(null);
 
-  // Inisialisasi nilai statis untuk mode Read-Only agar fetch() memanggil URL yang tepat
   useEffect(() => {
     const initialValues: Record<string, string> = {};
     ep.params?.forEach((param: any) => {
