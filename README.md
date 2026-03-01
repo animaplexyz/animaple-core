@@ -1,26 +1,32 @@
 # AnimapleCore API 🍁
 
 ![Version](https://img.shields.io/badge/version-v1.0.0-emerald.svg)
-![Next.js](https://img.shields.io/badge/Next.js-15.x-black?logo=next.js)
+![Next.js](https://img.shields.io/badge/Next.js-16.x-black?logo=next.js)
 ![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
-**AnimapleCore API** is the official backend engine powering the **Animaple Project**. Built with Next.js, this RESTful API seamlessly scrapes and serves real-time anime data from the Otakudesu website, delivering fast, reliable, and structured JSON responses for frontend integrations.
+**AnimapleCore API** is a highly optimized, unofficial REST API engine powering the **Animaple Project**. Built with modern Next.js 16, this API seamlessly scrapes and serves real-time anime metadata and streaming links from Otakudesu, delivering lightning-fast, structured JSON responses for frontend integrations.
 
-> **Disclaimer:** This project is developed strictly for personal, educational purposes, and as the backend infrastructure for Project Animaple. Use it at your own risk.
+> **Disclaimer:** This project is an unofficial API developed strictly for personal and educational purposes. It is not affiliated with, maintained, or endorsed by Otakudesu. Use it responsibly and at your own risk.
+
+## 🔗 Quick Links
+- 📖 **[Interactive Documentation](https://animaple-core.vercel.app)**
+- ⚖️ **[Terms of Service](https://animaple-core.vercel.app/terms)**
 
 ## ✨ Features
-- **Real-time Data Scraping:** Always get the latest updates, ongoing series, and complete batches.
-- **Serverless Ready:** Fully optimized for seamless deployment on Vercel as Serverless Functions.
-- **Modern Stack:** Built on top of Next.js App Router for maximum performance and caching.
-- **Clean JSON Structure:** Professional and predictable data mapping for easy frontend consumption.
+- **Cloudflare Bypass:** Utilizes ScraperAPI to reliably extract upstream data without blocks or captchas.
+- **Smart Tiered Caching:** Leverages Vercel Edge Cache (6h/24h/7d) to minimize upstream requests, save quota, and maximize speed.
+- **Enterprise Rate Limiting:** Secured by Upstash Redis (30 requests/minute per IP) to prevent abuse and DDoS attacks.
+- **Clean JSON Structure:** Professional and predictable data mapping for effortless frontend consumption.
 
 ## 🚀 Getting Started
 
 Follow these instructions to set up the project on your local machine for development and testing.
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed on your system.
+- [Node.js](https://nodejs.org/) installed on your system.
+- A [ScraperAPI](https://www.scraperapi.com/) key.
+- An [Upstash Redis](https://upstash.com/) database for rate limiting.
 
 ### Installation
 
@@ -35,17 +41,24 @@ Make sure you have [Node.js](https://nodejs.org/) installed on your system.
    npm install
    ```
 
+3. Set up environment variables:
+   Create a `.env` file in the root directory and add your credentials:
+   ```env
+   SCRAPER_API_KEY="your_scraperapi_key"
+   UPSTASH_REDIS_REST_URL="your_upstash_url"
+   UPSTASH_REDIS_REST_TOKEN="your_upstash_token"
+   ANIMAPLE_SECRET_KEY="your_secret_bypass_key"
+   ```
+
 ### Running Locally
 
 Start the development server:
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the API dashboard.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the interactive API dashboard.
 
 ## 📡 Available Endpoints
-
-Here are some of the main endpoints provided by AnimapleCore:
 
 | Endpoint | Method | Description |
 | :--- | :---: | :--- |
@@ -68,5 +81,5 @@ This project is licensed under the [MIT License](./LICENSE).
 ---
 <p align="center">
   <b>Animaple Project</b><br>
-  Developed by <a href="https://github.com/ofikur">Ofikur R.</a>
+  Developed by <a href="[https://github.com/ofikur](https://github.com/ofikur)">Ofikur R.</a>
 </p>
