@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import batch from '@/utils/batch';
 
-export const revalidate = 3600;
+export const revalidate = 604800;
 
 export async function GET(request: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {

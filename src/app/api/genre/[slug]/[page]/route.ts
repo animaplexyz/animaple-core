@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import animeByGenre from '@/utils/animeByGenre';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export async function GET(request: Request, { params }: { params: Promise<{ slug: string, page: string }> }) {
   try {

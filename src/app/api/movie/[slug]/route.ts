@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import movie from '@/utils/movie';
 
-export const revalidate = 3600;
+export const revalidate = 604800;
 
 export async function GET(request: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {

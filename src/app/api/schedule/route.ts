@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import schedule from "@/utils/schedulte"
 
-export const revalidate = 3600;
+export const revalidate = 21600;
 
 export async function GET() {
   const data = await schedule()
