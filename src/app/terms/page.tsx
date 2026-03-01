@@ -54,7 +54,16 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-xl font-bold text-slate-900 mb-3">5. Limitation of Liability</h2>
             <p>
-              In no event shall the developer (Ofikur R.) or contributors of the Animaple Project be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with the use of this Service. You use the data provided by this API entirely at your own risk.
+              In no event shall the developer (
+              <a 
+                href="https://github.com/ofikur" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="font-bold text-indigo-600 hover:text-indigo-700 hover:underline transition-all"
+              >
+                Ofikur R.
+              </a>
+              ) or contributors of the Animaple Project be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with the use of this Service. You use the data provided by this API entirely at your own risk.
             </p>
           </section>
 
