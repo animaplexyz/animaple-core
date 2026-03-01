@@ -42,6 +42,19 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
   const [fetchTime, setFetchTime] = useState<string | null>(null);
   const [status, setStatus] = useState<number | null>(null);
 
+  // Inisialisasi nilai statis untuk mode Read-Only agar fetch() memanggil URL yang tepat
+  useEffect(() => {
+    const initialValues: Record<string, string> = {};
+    ep.params?.forEach((param: any) => {
+      initialValues[param.name] = param.type === 'number' ? '1' 
+        : (ep.id === 'movie' ? 'kimi-no-na-wa-sub-indo' 
+        : (ep.id === 'batch' ? 'frieren-s1-batch-sub-indo'
+        : (ep.id === 'genre-page' && param.name === 'genre' ? 'action' 
+        : 'naruto')));
+    });
+    setParamValues(initialValues);
+  }, [ep]);
+
   const handleRun = async () => {
     setIsLoading(true);
     setLiveResponse(null);
@@ -112,7 +125,7 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
               </div>
             )}
 
-            {/* Interactive Playground */}
+            {/* Interactive Playground (LOCKED MODE) */}
             <div className="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest flex items-center gap-1.5">
@@ -131,21 +144,35 @@ const EndpointCard = ({ ep, idx }: { ep: any, idx: number }) => {
 
               {ep.params && ep.params.length > 0 && (
                 <div className="space-y-3 mb-4">
-                  {ep.params.map((param: any, i: number) => (
-                    <div key={i} className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-bold text-slate-500 uppercase flex justify-between">
-                        <span>{param.name}</span>
-                        {param.required && <span className="text-rose-400">*</span>}
-                      </label>
-                      <input
-                        type="text"
-                        placeholder={`e.g., ${param.type === 'number' ? '1' : 'naruto'}`}
-                        className="bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-                        value={paramValues[param.name] || ''}
-                        onChange={(e) => setParamValues({...paramValues, [param.name]: e.target.value})}
-                      />
-                    </div>
-                  ))}
+                  <div className="mb-2 p-2 bg-amber-50 border border-amber-200 rounded-md flex items-start gap-2">
+                    <svg className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-[10px] text-amber-700 leading-tight">
+                      To protect server quota, custom inputs are disabled in this demo. Live testing is restricted to predefined cached values.
+                    </p>
+                  </div>
+                  {ep.params.map((param: any, i: number) => {
+                    const defaultValue = paramValues[param.name] || '';
+                    return (
+                      <div key={i} className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase flex justify-between items-center">
+                          <span className="flex items-center gap-1.5">
+                            {param.name} 
+                            <span className="bg-slate-200 text-slate-500 px-1.5 py-0.5 rounded-[4px] text-[8px] tracking-wider font-bold">LOCKED</span>
+                          </span>
+                          {param.required && <span className="text-rose-400">*</span>}
+                        </label>
+                        <input
+                          type="text"
+                          className="bg-slate-100 border border-slate-200 rounded-md px-3 py-1.5 text-xs font-mono text-slate-500 focus:outline-none cursor-not-allowed select-none opacity-80"
+                          value={defaultValue}
+                          readOnly
+                          title="Input locked to save ScraperAPI quota."
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
@@ -631,7 +658,7 @@ export default function DocumentationPage() {
           </Link>
         </div>
         
-        {/* Navigasi - SCROLLABLE */}
+        {/* Navigasi */}
         <nav className="flex-1 px-6 lg:pl-10 xl:pl-12 lg:pr-8 pb-10 overflow-y-auto custom-scrollbar space-y-8 text-sm font-medium">
           <div>
             <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3 mt-4">Introduction</h3>
