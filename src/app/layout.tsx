@@ -6,11 +6,11 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "AnimapleCore Powered by Otakudesu",
-  description: "Core API for Project Animaple, scraping Otakudesu data.",
+  title: "AnimapleCore API",
+  description: "Unofficial Otakudesu REST API for Animaple Project, providing structured anime metadata and streaming links.",
   openGraph: {
-    title: "AnimapleCore Powered by Otakudesu",
-    description: "Core API for Project Animaple, scraping Otakudesu data.",
+    title: "AnimapleCore API",
+    description: "Unofficial Otakudesu REST API for Animaple Project, providing structured anime metadata and streaming links.",
     url: "https://animaple-core.vercel.app",
     siteName: "AnimapleCore",
     images: [
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "AnimapleCore Powered by Otakudesu",
-    description: "Core API for Project Animaple, scraping Otakudesu data.",
+    title: "AnimapleCore API",
+    description: "Unofficial Otakudesu REST API for Animaple Project, providing structured anime metadata and streaming links.",
     images: ["/icon.png"],
   },
 }
