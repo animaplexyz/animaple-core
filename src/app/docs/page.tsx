@@ -761,7 +761,7 @@ export default function DocumentationPage() {
                 <p className="mb-3">This API is designed for speed and reliability using a dual-layer caching strategy:</p>
                 <ul className="list-disc pl-5 space-y-1.5 mb-4">
                   <li><strong>Edge Caching:</strong> All endpoints are cached at the Vercel Edge Network. Response times for cached hits are typically under 50ms.</li>
-                  <li><strong>Automated Revalidation:</strong> Background Cron Jobs trigger every 1 hour to silently update the cache from upstream sources.</li>
+                  <li><strong>Smart Tiered Revalidation:</strong> Cache lifetimes are dynamically optimized to conserve upstream quota. Dynamic endpoints (ongoing/schedule) update every <strong>6 hours</strong>, semi-static data every <strong>24 hours</strong>, and completed series/movies are cached for <strong>7 days</strong>.</li>
                   <li><strong>Public Rate Limits:</strong> To ensure high availability, public access is securely protected by Upstash Redis. Requests are limited to <strong>30 requests per minute</strong> per IP. Rate limit headers are included in every response.</li>
                 </ul>
               </div>
