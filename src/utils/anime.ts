@@ -1,9 +1,12 @@
 import { fetchHtml } from "./fetchHtml"
 import scrapeSingleAnime from "@/lib/scrapeSingleAnime"
+// Pastikan file src/lib/anilist.ts sudah dibuat!
 import { fetchAnilistMetadata } from "@/lib/anilist"
-import { anime } from "@/types/types"
 
-const anime = async (slug: string): Promise<anime | undefined> => {
+// PERBAIKAN: Gunakan 'import type' dan beri alias 'AnimeData' agar tidak bentrok dengan nama fungsi
+import type { anime as AnimeData } from "@/types/types"
+
+const anime = async (slug: string): Promise<AnimeData | undefined> => {
   const html = await fetchHtml(`anime/${slug}`)
   const data = scrapeSingleAnime(html)
 
@@ -59,7 +62,6 @@ const anime = async (slug: string): Promise<anime | undefined> => {
     }
   } catch (err) {
     // Jika Anilist error, jangan biarkan API crash.
-    // Cukup log error-nya dan kembalikan data scraping asli.
     console.error("Gagal sync Anilist:", err);
   }
 
