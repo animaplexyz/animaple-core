@@ -1,75 +1,40 @@
-import { load } from "cheerio"
-import { fetchHtml } from "./fetchHtml"
-import { fetchAnilistMetadata } from "@/lib/anilist"
-import type { ongoingAnime, completeAnime } from "@/types/types"
+import { load } from 'cheerio';
+import { fetchHtml } from './fetchHtml';
+import scrapeOngoingAnime from '@/lib/scapeOngoingAnime';
+import scrapeCompleteAnime from '@/lib/scrapeCompleteAnime';
+import type { ongoingAnime as ongoingAnimeType, completeAnime as completeAnimeType } from '@/types/types';
 
-const home = async () => {
-  const html = await fetchHtml("home")
-  const $ = load(html)
-
-  // 1. Scrape Ongoing Anime
-  const ongoing_anime: ongoingAnime[] = []
-  $(".venutama .rapi:first ul li").each((i, el) => {
-    const title = $(el).find(".thumb > a > .thumbz > .jdlflm").text()
-    const slug = $(el).find(".thumb > a").attr("href")?.replace("https://otakudesu.cloud/anime/", "").replace("/", "")
-    const poster = $(el).find(".thumb > a > .thumbz > img").attr("src")
-    const current_episode = $(el).find(".epz").text()
-    const release_day = $(el).find(".epztipe").text()
-    const newest_release_date = $(el).find(".newnime").text()
-    const otakudesu_url = $(el).find(".thumb > a").attr("href")
-
-    ongoing_anime.push({
-      title,
-      slug,
-      poster,
-      current_episode,
-      release_day,
-      newest_release_date,
-      otakudesu_url,
-    })
-  })
-
-  // 2. MAGISNYA DI SINI: Inject Banner Anilist untuk 7 Anime Teratas (Carousel)
-  // Kita batasi 7 saja agar loading home tidak lemot
-  const topAnime = ongoing_anime.slice(0, 7);
-  
-  await Promise.all(
-    topAnime.map(async (anime) => {
-      if (anime.title) {
-        const metadata = await fetchAnilistMetadata(anime.title);
-        if (metadata && metadata.bannerImage) {
-          anime.banner = metadata.bannerImage;
-        }
-      }
-    })
-  );
-
-  // 3. Scrape Completed Anime
-  const complete_anime: completeAnime[] = []
-  $(".venutama .rapi:last ul li").each((i, el) => {
-    const title = $(el).find(".thumb > a > .thumbz > .jdlflm").text()
-    const slug = $(el).find(".thumb > a").attr("href")?.replace("https://otakudesu.cloud/anime/", "").replace("/", "")
-    const poster = $(el).find(".thumb > a > .thumbz > img").attr("src")
-    const episode_count = $(el).find(".epz").text()
-    const rating = $(el).find(".epztipe").text()
-    const last_release_date = $(el).find(".newnime").text()
-    const otakudesu_url = $(el).find(".thumb > a").attr("href")
-
-    complete_anime.push({
-      title,
-      slug,
-      poster,
-      episode_count,
-      rating,
-      last_release_date,
-      otakudesu_url,
-    })
-  })
-
-  return {
-    ongoing_anime,
-    complete_anime,
-  }
+interface HomeData {
+  ongoing_anime: ongoingAnimeType[];
+  complete_anime: completeAnimeType[];
 }
 
-export default home
+interface ErrorData {
+  error: string;
+  message: string;
+}
+
+const home = async (): Promise<HomeData | ErrorData> => {
+  try {
+    const data = await fetchHtml('');
+    const $ = load(data);
+    
+    const ongoingAnimeEls = $('.venutama .rseries .rapi:first .venz ul li').toString();
+    const completeAnimeEls = $('.venutama .rseries .rapi:last .venz ul li').toString();
+    
+    const ongoing_anime = scrapeOngoingAnime(ongoingAnimeEls);
+    const complete_anime = scrapeCompleteAnime(completeAnimeEls);
+
+    return {
+      ongoing_anime,
+      complete_anime
+    };
+  } catch (error: any) {
+    return {
+      error: "Gagal mengambil data",
+      message: error?.message || "Unknown Error"
+    };
+  }
+};
+
+export default home;
