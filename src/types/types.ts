@@ -25,7 +25,48 @@ type anime = {
     poster: string | undefined
     otakudesu_url: string | undefined
   }[]
+  
+  // --- Data Tambahan (Anilist) ---
+  id_provider?: {
+    anilist?: number
+    mal?: number
+  }
+  banner?: string | undefined
+  trailer?: {
+    id: string
+    site: string
+    url: string
+  } | null
+  characters?: character[]
+  relations?: relation[]
+  next_airing?: {
+    episode: number
+    airing_at: number
+    time_until: number
+  } | null
 }
+
+type character = {
+  name: string
+  image: string
+  role: string
+  // FIX: Tambahkan '| null' agar kompatibel dengan data API
+  voice_actor?: {
+    name: string
+    image: string
+    language: string
+  } | null
+}
+
+type relation = {
+  id: number
+  title: string
+  type: string
+  poster: string
+  status: string
+}
+
+// ... Tipe data lama tetap sama di bawah ini ...
 
 type searchResultAnime = {
   title: string | undefined
@@ -126,4 +167,4 @@ interface ScheduleByDay {
   }[];
 }
 
-export type { anime, searchResultAnime, ongoingAnime, completeAnime, genre, episode_list, episode, batch, ScheduleByDay }
+export type { anime, character, relation, searchResultAnime, ongoingAnime, completeAnime, genre, episode_list, episode, batch, ScheduleByDay }
