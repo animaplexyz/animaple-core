@@ -19,45 +19,6 @@
 - **Enterprise Rate Limiting:** Secured by Upstash Redis (30 requests/minute per IP) to prevent abuse and DDoS attacks.
 - **Clean JSON Structure:** Professional and predictable data mapping for effortless frontend consumption.
 
-## 🚀 Getting Started
-
-Follow these instructions to set up the project on your local machine for development and testing.
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) installed on your system.
-- A [ScraperAPI](https://www.scraperapi.com/) key.
-- An [Upstash Redis](https://upstash.com/) database for rate limiting.
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ofikur/animaple-core.git
-   cd animaple-core
-   ```
-
-2. Install the dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Set up environment variables:
-   Create a `.env` file in the root directory and add your credentials:
-   ```env
-   SCRAPER_API_KEY="your_scraperapi_key"
-   UPSTASH_REDIS_REST_URL="your_upstash_url"
-   UPSTASH_REDIS_REST_TOKEN="your_upstash_token"
-   ANIMAPLE_SECRET_KEY="your_secret_bypass_key"
-   ```
-
-### Running Locally
-
-Start the development server:
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the interactive API dashboard.
-
 ## 📡 Available Endpoints
 
 | Endpoint | Method | Description |
@@ -81,5 +42,4 @@ This project is licensed under the [MIT License](./LICENSE).
 ---
 <p align="center">
   <b>Animaple Project</b><br>
-  Developed by <a href="[https://github.com/ofikur](https://github.com/ofikur)">Ofikur R.</a>
 </p>
