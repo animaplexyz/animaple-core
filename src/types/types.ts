@@ -25,8 +25,6 @@ type anime = {
     poster: string | undefined
     otakudesu_url: string | undefined
   }[]
-  
-  // --- Data Tambahan (Anilist) ---
   id_provider?: {
     anilist?: number
     mal?: number
@@ -50,7 +48,6 @@ type character = {
   name: string
   image: string
   role: string
-  // FIX: Tambahkan '| null' agar kompatibel dengan data API
   voice_actor?: {
     name: string
     image: string
@@ -66,8 +63,6 @@ type relation = {
   status: string
 }
 
-// ... Tipe data lama tetap sama di bawah ini ...
-
 type searchResultAnime = {
   title: string | undefined
   slug: string | undefined
@@ -78,6 +73,7 @@ type searchResultAnime = {
   url: string | undefined
 }
 
+// PERBAIKAN DI SINI: Tambahkan 'banner'
 type ongoingAnime = {
   title: string | undefined
   slug: string | undefined
@@ -86,6 +82,7 @@ type ongoingAnime = {
   release_day: string | undefined
   newest_release_date: string | undefined
   otakudesu_url: string | undefined
+  banner?: string | undefined // <-- Field Baru
 }
 
 type completeAnime = {
