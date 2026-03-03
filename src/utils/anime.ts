@@ -1,4 +1,4 @@
-import { fetchHtml } from "./fetchHtml" // <-- PERBAIKAN: Pakai kurung kurawal { }
+import { fetchHtml } from "./fetchHtml"
 import scrapeSingleAnime from "@/lib/scrapeSingleAnime"
 import { fetchAnilistMetadata } from "@/lib/anilist"
 import { anime } from "@/types/types"
